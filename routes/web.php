@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,22 @@ Route::get('/a-propos', function (){
     ]);
 });
 
-Route::get('/hello/{name}', function ($name){
+Route::get('/hello/{name?}', function ($name = 'Happy'){
     return "<h1> Hello $name </h1>";
+})->where('name', '.{2,}'); // Le nom doit faire 2 caractères minimum
+
+// Afficher les annonces
+Route::get('/nos-annonces', function () {
+    /* ATTENTION use Illuminate\Support\Facades\DB */
+    $properties = DB::select('SELECT * FROM properties WHERE sold = :sold', [
+       'sold' => 0,
+    ]);
+    // Permet de ne plus écrire de SQL ...
+    $properties = DB::table('properties')->where('sold', 0,)->where('sold', '=', 1, 'or')->get();
+
+    
+
+    return view('properties/index', [
+        'properties' => $properties,
+    ]);
 });

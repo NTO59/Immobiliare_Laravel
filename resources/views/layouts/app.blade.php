@@ -32,6 +32,9 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('a-propos') ? 'active' : '' }}" href="/a-propos">A propos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('nos-annonces') ? 'active' : '' }}" href="/nos-annonces">Nos annonces</a>
+                    </li>
                 </ul>
             </div>
         </div>
