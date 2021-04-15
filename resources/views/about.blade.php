@@ -2,6 +2,12 @@
 
 @extends('layouts.app') {{-- layout/app --}}
 
+{{-- @parent vaut la valeur par defaut "Immobiliare" --}}
+
+@section('title')
+    A propos - @parent
+@endsection
+
 {{-- On met le contenu suivant dans le yield content --}}
 @section('content')
 
@@ -31,7 +37,7 @@
     
     <h2>boucle en Blade</h2>
 
-    @for ($i = 0; $i < $i; $i++)
+    @for ($i = 0; $i < 11; $i++)
     {{ $i }}
     @endfor
     

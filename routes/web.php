@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/a-propos', function (){
@@ -24,4 +24,8 @@ Route::get('/a-propos', function (){
         'name' => $name,
         'bibis' => [1, 2, 3, 4],
     ]);
+});
+
+Route::get('/hello/{name}', function ($name){
+    return "<h1> Hello $name </h1>";
 });
