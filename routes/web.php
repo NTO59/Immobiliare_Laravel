@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -52,11 +53,47 @@ Route::get('/nos-annonces', function () {
 Route::get('/nos-annonces/{id}', function ($ids) {
     $annonces = DB::table('properties')->where('id', $ids)->get();
 
-    //if(!$annonces){
+    if(! $annonces){
         abort(404); // On renvoie une 404 avec Laravel
-    //}
+    }
 
     return view('properties/show', [
         'annonces' => $annonces,
     ]);
+})->whereNumber(('id')); // s'assure que le $id est seulement un nombre
+
+Route::get('/nos-annonces/creer', function () {
+    return view('properties/create');
+});
+
+
+// use Illuminate\Http\Request;
+Route::post('/nos-annonces/creer', function ( Request $request) {
+    // Traitement du formulaire
+
+    $request->validate([
+        'title' => 'required|string|unique:properties|min:2 max:255',
+        'description' => 'required|string|min:15',
+        'price' => 'required|integer|gt:0',
+        
+    ]);
+
+
+    DB::table('properties')->insert([
+        'title' => $request->title,
+        'description' => $request->description,
+        'price' => $request->price,
+        'sold' => $request->filled('sold'),
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    // autre solution ...
+    // DB::table('properties')->insert(
+    //     $request->all('title', 'description', 'price') +
+    //     ['sold' => $request->filled('sold')]
+    // );
+
+    // On redirige et on met l'annonce dnaas la session
+    return redirect('/nos-annonces')->withInput();
 });
