@@ -73,6 +73,9 @@ class PropertyController extends Controller
             'updated_at' => now(),
         ]);
 
+        // Upload...
+        $request->image->storeAs('public/annonces', DB::getPdo()->lastInsertId().'.'.$request->image->extension());
+
         // autre solution ...
         // DB::table('properties')->insert(
         //     $request->all('title', 'description', 'price') +
@@ -139,7 +142,7 @@ class PropertyController extends Controller
     {
         DB::table('properties')->delete($id);
 
-        return redirect('/nos-annonces')->width('message', 'Annonce supprimée');
+        return redirect('/nos-annonces')->with('message', 'Annonce supprimée');
 
     }
 }   
