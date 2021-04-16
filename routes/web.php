@@ -97,3 +97,5 @@ Route::post('/nos-annonces/creer', function ( Request $request) {
     // On redirige et on met l'annonce dnaas la session
     return redirect('/nos-annonces')->withInput();
 });
+
+
