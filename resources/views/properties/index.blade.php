@@ -10,7 +10,7 @@
                         <div class="card-body bg-dark">
                             <h5 class="card-title ">{{ $property->title }}</h5>
                             <p class="card-text"> {{Str::limit($property->description, 20)}} </p>
-                            <a href="#" class="btn btn-light d-grid">Voir l'annonce</a>
+                            <a href="#" class="btn btn-info d-grid">Voir l'annonce</a>
                             <div class="card-footer text-muted">
                                 {{number_format($property->price)}} €
                             </div>

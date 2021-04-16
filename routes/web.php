@@ -52,6 +52,9 @@ Route::get('/nos-annonces', function () {
 Route::get('/nos-annonces/{id}', function ($ids) {
     $annonces = DB::table('properties')->where('id', $ids)->get();
 
+    //if(!$annonces){
+        abort(404); // On renvoie une 404 avec Laravel
+    //}
 
     return view('properties/show', [
         'annonces' => $annonces,

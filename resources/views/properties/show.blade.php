@@ -3,15 +3,18 @@
 @section('content')
     <div class="container">
         @foreach ($annonces as $annonce)
-            
-            <h3> {{ $annonce->title }} </h3>
+            <h3 class="my-4 text-center"> {{ $annonce->title }} </h3>
 
-            <p> {{ $annonce->description }} </p>
+            <div class="img">
+                IMAGE
+            </div>
+
+            <div class="infos">
+                <p> {{ $annonce->description }} </p>
 
 
-            <p> {{ number_format($annonce->price) }} € </p>
-
-
+                <p> {{ number_format($annonce->price) }} € </p>
+            </div>
         @endforeach
     </div>
 @endsection
