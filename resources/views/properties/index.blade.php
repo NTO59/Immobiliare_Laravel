@@ -21,7 +21,14 @@
                         <div class="card-body bg-dark">
                             <h5 class="card-title ">{{ $property->title }}</h5>
                             <p class="card-text"> {{Str::limit($property->description, 20)}} </p>
-                            <a href="properties/show" class="btn btn-light d-grid">Voir l'annonce</a>
+                            <a href="/nos-annonces/{{$property->id}}" class="btn btn-primary">Voir l'annonce</a>
+                            <a href="/nos-annonces/editer/{{$property->id}}" class="btn btn-secondary">Editer l'annonce</a>
+                            <form action="/nos-annonces/ {{$property->id}} " method="post" onsubmit="return confirm('Voulez-vous supprimer cette annonce ?')">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger">Supprimer l'annonce</button>
+                            </form>
+
                             <div class="card-footer text-muted">
                                 {{number_format($property->price)}} €
                             </div>
