@@ -42,7 +42,10 @@ class PropertyController extends Controller
         // }
 
         //return view('properties/show', ['annonces' => $annonces,]);
-        return view('properties/show', ['annonces' => $property,]);
+        //dump($property);
+
+        return view('properties/show', ['annonce' => $property]);
+    
     }
 
     /**

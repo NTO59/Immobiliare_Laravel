@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="container">
-        @foreach ($annonces as $annonce)
+
+       
             <h3 class="my-4 text-center"> {{ $annonce->title }} </h3>
 
             <div class="img">
@@ -15,6 +16,6 @@
 
                 <p> {{ number_format($annonce->price) }} € </p>
             </div>
-        @endforeach
+       
     </div>
 @endsection

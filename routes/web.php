@@ -39,7 +39,7 @@ Route::get('/hello/{name?}', function ($name = 'Happy') {
 Route::get('/nos-annonces', [PropertyController::class, 'index']);
 
 // Voir une annonce
-Route::get('/nos-aannonces/{property}', [PropertyController::class, 'show'])->whereNumber(('property'));
+Route::get('/nos-annonces/{property}', [PropertyController::class, 'show'])->whereNumber(('property'));
 Route::get('/nos-annonces/{id}', [PropertyController::class, 'show'])->whereNumber(('id')); // s'assure que le $id est seulement un nombre
 
 // On affiche le formulaire
