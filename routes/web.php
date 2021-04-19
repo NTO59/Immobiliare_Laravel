@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PropertyController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -57,3 +58,7 @@ Route::put('/nos-annonces/editer/{id}', [PropertyController::class, 'update']);
 Route::delete('/nos-annonces/{id}', [PropertyController::class, 'delete']);
 
 
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

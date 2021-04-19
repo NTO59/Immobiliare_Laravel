@@ -10,7 +10,7 @@
 
 {{-- On met le contenu suivant dans le yield content --}}
 @section('content')
-<div class="container">
+<div class="container text-light">
 
     <h1>Hello {{ $name }} </h1>
     

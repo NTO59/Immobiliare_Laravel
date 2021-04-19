@@ -4,13 +4,13 @@
     <div class="container">
 
        
-            <h3 class="my-4 text-center"> {{ $annonce->title }} </h3>
+            <h3 class="my-4 text-center text-light"> {{ $annonce->title }} </h3>
 
-            <div class="img">
+            <div class="img text-light">
                 IMAGE
             </div>
 
-            <div class="infos">
+            <div class="infos text-light">
                 <p> {{ $annonce->description }} </p>
 
 
