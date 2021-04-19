@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -24,22 +25,24 @@ class PropertyController extends Controller
 
 
         return view('properties/index', [
-            'properties' => $properties,
+            'properties' => Property::all(),
+            //'properties' => Property::where('sold', 0)->get(),
         ]);
     }
 
     /**
      * Afficher une annonce
      */
-    public function show($ids)
+    public function show( Property $property)
     {
-        $annonces = DB::table('properties')->where('id', $ids)->get();
+        // $annonces = DB::table('properties')->where('id', $ids)->get();
 
-        if (! $annonces) {
-            abort(404); // On renvoie une 404 avec Laravel
-        }
+        // if (! $annonces) {
+        //     abort(404); // On renvoie une 404 avec Laravel
+        // }
 
-        return view('properties/show', ['annonces' => $annonces,]);
+        //return view('properties/show', ['annonces' => $annonces,]);
+        return view('properties/show', ['annonces' => $property,]);
     }
 
     /**
@@ -72,7 +75,7 @@ class PropertyController extends Controller
             $path = $request->image->store('public/annonces'); // public/annonces/1234.jpg => /storage/annonces/1234.jpg
         }
 
-        DB::table('properties')->insert([
+        /* DB::table('properties')->insert([
             'title' => $request->title,
             'description' => $request->description,
             'image' => str_replace('public', '/storage', $path),
@@ -80,8 +83,14 @@ class PropertyController extends Controller
             'sold' => $request->filled('sold'),
             'created_at' => now(),
             'updated_at' => now(),
-        ]);
-
+        ]); */
+            Property::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'image' => str_replace('public', '/storage', $path),
+                'price' => $request->price,
+                'sold' => $request->filled('sold'),
+            ]);
 
         // autre solution ...
         // DB::table('properties')->insert(
@@ -98,11 +107,13 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        $property = DB::table('properties')->find($id);
+        // $property = DB::table('properties')->find($id);
 
-        if(! $property){
-            abort(404);
-        }
+        // if(! $property){
+        //     abort(404);
+        // }
+        
+        $property = Property::findOrFail($id);
 
         return view('properties/edit', ['property' => $property]);
     }
@@ -124,12 +135,12 @@ class PropertyController extends Controller
         ]);
 
 
-        DB::table('properties')->where('id', $id)->update([
+        //DB::table('properties')->where('id', $id)
+        Property::findOrFail($id)->update([
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
             'sold' => $request->filled('sold'),
-            'updated_at' => now(),
         ]);
 
         // autre solution ...
@@ -138,7 +149,7 @@ class PropertyController extends Controller
         //     ['sold' => $request->filled('sold')]
         // );
 
-        // On redirige et on met l'annonce dnaas la session
+        // On redirige et on met l'annonce dans la session
         return redirect('/nos-annonces')->with('message', 'Annonce mise à jour.');
     }
 
@@ -147,7 +158,8 @@ class PropertyController extends Controller
      */
     public function delete($id)
     {
-        $property = DB::table('properties')->find($id);
+        //$property = DB::table('properties')->find($id);
+        $property = Property::findOrFail($id);
 
         if($property->image){
             Storage::delete(
@@ -155,7 +167,8 @@ class PropertyController extends Controller
             );
         }
 
-        DB::table('properties')->delete($id);
+        //DB::table('properties')->delete($id);
+        $property->delete();
 
         return redirect('/nos-annonces')->with('message', 'Annonce supprimée');
 
